@@ -1,0 +1,56 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+CREATE TABLE `codes` (
+  `id` int(11) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `plan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `stat` (
+  `id` int(11) NOT NULL,
+  `db` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL COMMENT 'User ID',
+  `username` varchar(255) NOT NULL COMMENT 'Username',
+  `password` varchar(255) NOT NULL COMMENT 'Hashed password',
+  `email` varchar(255) NOT NULL COMMENT 'Email',
+  `license` enum('user','Trial','Simple','Pro','Elite') NOT NULL COMMENT 'User License',
+  `api_key` varchar(255) NOT NULL COMMENT 'API KEY',
+  `telegram` int(11) NOT NULL DEFAULT '0',
+  `expire` int(11) NOT NULL DEFAULT '0' COMMENT 'Expire Date in time format'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `codes`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `stat`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `key` (`api_key`);
+
+ALTER TABLE `codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `stat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'User ID';
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
